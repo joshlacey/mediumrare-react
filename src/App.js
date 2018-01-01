@@ -1,21 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Nav from './components/Nav';
+import Body from './components/Body';
+import { connect } from 'react-redux';
+import Popup from './components/Popup'
+import SignupPopup from './components/popups/signupPopup.js'
+import SigninPopup from './components/popups/signinPopup.js'
 
 class App extends Component {
+
+  hasPopup = () => {
+    console.log('hitcase')
+    switch(this.props.popup){
+      case 'signup':
+        const SignupComponent = Popup(SignupPopup)
+        return <SignupComponent />
+      case 'signin':
+        const SigninComponent = Popup(SigninPopup)
+        return <SigninComponent />
+      default:
+        null
+    }
+  }
+
   render() {
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {this.hasPopup()}
+        <Nav/>
+        <Body/>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    popup: state.main.popup
+  }
+}
+
+export default connect(mapStateToProps)(App)
