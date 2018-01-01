@@ -1,26 +1,52 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { withRouter } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Parser from 'html-react-parser';
+import FrontPage from './FrontPage';
+import Profile from './Profile';
+import Stories from './Stories';
+import Settings from './Settings';
+import Signout from './Signout';
+import WriteStory from './WriteStory';
+import Bookmarks from './Bookmarks';
+import NoMatch from './NoMatch';
 
 class Body extends React.Component {
 
   render() {
-    const stories = this.props.stories.map(s => ( <li key={s.title}><h1>{s.title}</h1>{Parser(s.body.html)}</li> ))
+    console.log(this.props.username)
+    const username = localStorage.getItem('username')
     return (
-      <div>
-        <h1>Body goes here</h1>
-        <ul>
-          {stories}
-        </ul>
-      </div>
+        <Switch>
+          <Route exact path='/' component={FrontPage} />
+          <Route path={`/@${username}`} component={Profile} />
+          <Route path='/me/stories' component={Stories} /> //authorize
+          <Route path='/me/settings' component={Settings} /> //authorize
+          <Route path='/signout' component={Signout} /> //authorize
+          <Route path='/new-story' component={WriteStory} /> //authorize
+          <Route path='/browse/bookmarks' component={Bookmarks} />//authorize
+          <Route component={NoMatch} />
+        </Switch>
     )
   }
 }
 
 function mapStateToProps(state) {
   return {
-    stories: state.story.stories
+    loggedIn: state.user.loggedIn,
+    username: state.user.username
   }
 }
 
-export default connect(mapStateToProps)(Body)
+export default withRouter(connect(mapStateToProps)(Body))
+
+// <Switch>
+//   <Route exact path='/' component={Home} />
+//   <Route path='/palates' component={PalatesContainer} />
+//   <Route path='/logout' component={Logout} />
+//   <Route path="/login" render={(props) => <AuthLoginForm {...props}/> }/>
+//   <Route path="/signup" render={(props) => <AuthSignupForm {...props}/> }/>
+//   <Route path='/edit' component={SVGEdit} />
+//   <Route path={`/${username}/palates`} component={MyPalates} />
+// </Switch>
