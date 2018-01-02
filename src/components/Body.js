@@ -11,26 +11,38 @@ import Signout from './Signout';
 import WriteStory from './WriteStory';
 import Bookmarks from './Bookmarks';
 import NoMatch from './NoMatch';
+import Authorize from './Authorize'
 
 class Body extends React.Component {
 
   render() {
     console.log(this.props.username)
     const username = localStorage.getItem('username')
+    
+    const AuthStories = Authorize(Stories)
+    const AuthSettings = Authorize(Settings)
+    const AuthSignout = Authorize(Signout)
+    const AuthWriteStory = Authorize(WriteStory)
+    const AuthBookmarks = Authorize(Bookmarks)
+
     return (
         <Switch>
           <Route exact path='/' component={FrontPage} />
           <Route path={`/@${username}`} component={Profile} />
-          <Route path='/me/stories' component={Stories} /> //authorize
-          <Route path='/me/settings' component={Settings} /> //authorize
-          <Route path='/signout' component={Signout} /> //authorize
-          <Route path='/new-story' component={WriteStory} /> //authorize
-          <Route path='/browse/bookmarks' component={Bookmarks} />//authorize
+          <Route path='/me/stories' component={AuthStories} /> //authorize
+          <Route path='/me/settings' component={AuthSettings} /> //authorize
+          <Route path='/signout' component={AuthSignout} /> //authorize
+          <Route path='/new-story' component={AuthWriteStory} /> //authorize
+          <Route path='/browse/bookmarks' component={AuthBookmarks} />//authorize
           <Route component={NoMatch} />
         </Switch>
     )
   }
 }
+
+'/signout'
+
+'/me/stories' || '/me/settings' || '/new-story' || '/browse/bookmarks'
 
 function mapStateToProps(state) {
   return {
