@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { signupInfo } from '../../actions/user.js';
+import { closePopup } from '../../actions/main.js';
 
 class SignupPopup extends React.Component {
   state={
@@ -44,6 +45,12 @@ class SignupPopup extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.loggedIn){
+      this.props.closePopup()
+    }
+  }
+
   render(){
     return (
       <div>
@@ -59,12 +66,21 @@ class SignupPopup extends React.Component {
   }
 }
 
+function mapStateToProps(state){
+  return{
+    loggedIn: state.user.loggedIn
+  }
+}
+
 function mapDispatchToProps(dispatch){
   return {
     signupInfo: (username, password, email) => {
       dispatch(signupInfo(username, password, email))
+    },
+    closePopup:() => {
+      dispatch(closePopup())
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignupPopup)
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPopup)

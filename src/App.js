@@ -3,8 +3,9 @@ import Nav from './components/Nav';
 import Body from './components/Body';
 import { connect } from 'react-redux';
 import Popup from './components/Popup'
-import SignupPopup from './components/popups/signupPopup.js'
-import SigninPopup from './components/popups/signinPopup.js'
+import SignupPopup from './components/popups/signupPopup.js';
+import SigninPopup from './components/popups/signinPopup.js';
+import UserOptionsPopup from './components/popups/UserOptionsPopup';
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
       <div className="App">
         {this.hasPopup()}
         <Nav/>
+        {this.props.showUserOptionsPopup ? <UserOptionsPopup /> : null}
         <Body/>
       </div>
     );
@@ -36,7 +38,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    popup: state.main.popup
+    popup: state.main.popup,
+    showUserOptionsPopup: state.user.showUserOptions
   }
 }
 

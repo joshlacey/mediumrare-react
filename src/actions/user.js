@@ -38,6 +38,7 @@ export function signinInfo(username, password) {
           alert(json.message)
         } else{
           setLocalStorage(json)
+          dispatch(setLoginState(json.user.username))
         }
       })
   }
@@ -64,7 +65,21 @@ export function signupInfo(username, password, email) {
           alert(json.message)
         } else {
           setLocalStorage(json)
+          dispatch(setLoginState(json.user.username))
         }
       })
+  }
+}
+
+function setLoginState(username) {
+  return {
+    type: 'LOGGED_IN',
+    payload: username
+  }
+}
+
+export function showUserOptionsPopup() {
+  return {
+    type: 'TOGGLE_USER_OPTIONS_POPUP'
   }
 }
