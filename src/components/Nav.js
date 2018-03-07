@@ -23,7 +23,7 @@ const Nav = (props) => {
 
 function mapStateToProps(state) {
   return {
-    state: state.loggedin
+    state: state.user.loggedIn
   }
 }
 

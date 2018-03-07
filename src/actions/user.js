@@ -71,6 +71,12 @@ export function signupInfo(username, password, email) {
   }
 }
 
+export function logoutUser() {
+  localStorage.removeItem("jwtToken")
+  localStorage.removeItem("username")
+  return {type: 'LOGGED_OUT'} 
+}
+
 function setLoginState(username) {
   return {
     type: 'LOGGED_IN',

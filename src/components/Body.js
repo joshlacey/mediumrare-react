@@ -24,16 +24,19 @@ class Body extends React.Component {
     const AuthBookmarks = (Authorize(Bookmarks))
 
     return (
-          <Switch>
-            <Route exact path='/' component={FrontPage} />
-            <Route path={`/@${username}`} component={Profile} />
-            <Route path='/me/stories' render={(props) => <AuthStories {...props} />} />
-            <Route path='/me/settings' render={(props) => <AuthSettings {...props} />} />
-            <Route path='/signout' render={(props) => <AuthSignout {...props} />} />
-            <Route path='/new-story' render={(props) => <AuthWriteStory {...props} />} />
-            <Route path='/browse/bookmarks' render={(props) => <AuthBookmarks {...props} />} />
-            <Route component={NoMatch} />
-          </Switch>
+      <div style={{padding: '20px'}}>
+        <Switch>
+          <Route exact path='/' component={FrontPage} />
+          <Route path={`/@${username}`} component={Profile} />
+          <Route path='/me/stories' render={(props) => <AuthStories {...props} />} />
+          <Route path='/me/settings' render={(props) => <AuthSettings {...props} />} />
+          <Route path='/signout' render={(props) => <AuthSignout {...props} />} />
+          <Route path='/new-story' render={(props) => <AuthWriteStory {...props} />} />
+          <Route path='/browse/bookmarks' render={(props) => <AuthBookmarks {...props} />} />
+          <Route component={NoMatch} />
+        </Switch>
+      </div>
+
     )
   }
 }
